@@ -10,23 +10,30 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Index(c *gin.Context) {
+func ListProduct(c *gin.Context) {
+
+	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
+	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
+
+	offset := (page - 1) * limit
 
 	var data []models.Product
 
-	// Fetch all data from the database
-	result := database.DB.Find(&data)
+	var total int64
+	database.DB.Model(&models.Product{}).Count(&total)
+
+	result := database.DB.Limit(limit).Offset(offset).Find(&data)
 	if result.Error != nil {
-		utils.ErrorResponse(c, "Failed to retrieve data", http.StatusInternalServerError)
+		utils.ErrorResponse(c)
 		return
 	}
 
-	// Send response with the data data
-	utils.SuccessResponse(c, data)
+	meta := gin.H{"page": page, "limit": limit, "total": total}
+	utils.SuccessResponse(c, data, http.StatusOK, "Berhasil menampilkan data !", meta)
 
 }
 
-func Show(c *gin.Context) {
+func ShowProduct(c *gin.Context) {
 	idParam := c.Param("id")
 	id, err := strconv.Atoi(idParam) // Convert the ID from string to int
 	if err != nil {
@@ -44,17 +51,17 @@ func Show(c *gin.Context) {
 	utils.SuccessResponse(c, product)
 }
 
-func Store(c *gin.Context) {
+func StoreProduct(c *gin.Context) {
 	data := []string{"Product1", "Product2"}
 	utils.SuccessResponse(c, data)
 }
 
-func Update(c *gin.Context) {
+func UpdateProduct(c *gin.Context) {
 	data := []string{"Product1", "Product2"}
 	utils.SuccessResponse(c, data)
 }
 
-func Delete(c *gin.Context) {
+func DeleteProduct(c *gin.Context) {
 	data := []string{"Product1", "Product2"}
 	utils.SuccessResponse(c, data)
 }

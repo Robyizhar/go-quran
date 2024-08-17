@@ -2,6 +2,7 @@ package seeder
 
 import (
 	"go-quran/models"
+	"strconv"
 
 	"gorm.io/gorm"
 )
@@ -15,14 +16,10 @@ func Seed(db *gorm.DB) {
 		return // Data already seeded
 	}
 
-	// Insert sample data
-	products := []models.Product{
-		{Name: "Product 1", Description: "Creating an Engine instance with the Logger and Recovery middleware already attached"},
-		{Name: "Product 2", Description: "Creating an Engine instance with the Logger and Recovery middleware already attached"},
-		{Name: "Product 3", Description: "Creating an Engine instance with the Logger and Recovery middleware already attached"},
-	}
-
-	for _, product := range products {
-		db.Create(&product)
+	for i := 0; i < 10000; i++ {
+		db.Create(&models.Product{
+			Name:        "Product " + strconv.Itoa(i+1),
+			Description: "Creating an Engine instance with the Logger and Recovery middleware already attached" + strconv.Itoa(i+1),
+		})
 	}
 }

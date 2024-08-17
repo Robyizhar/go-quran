@@ -6,17 +6,25 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// SetupRoutes configures the routes for the application
 func SetupRoutes(r *gin.Engine) {
+
+	externalRoutes := r.Group("/external")
+	{
+		kenemagRoutes := externalRoutes.Group("/kemenag")
+		{
+			kenemagRoutes.GET("/syncronize", controllers.SyncronizeQuran)
+		}
+	}
+
 	api := r.Group("/api")
 	{
 		productRoutes := api.Group("/products")
 		{
-			productRoutes.GET("/", controllers.Index)
-			productRoutes.GET("/:id", controllers.Show)
-			productRoutes.POST("/", controllers.Store)
-			productRoutes.PUT("/:id", controllers.Update)
-			productRoutes.DELETE("/:id", controllers.Delete)
+			productRoutes.GET("/", controllers.ListProduct)
+			productRoutes.GET("/:id", controllers.ShowProduct)
+			productRoutes.POST("/", controllers.StoreProduct)
+			productRoutes.PUT("/:id", controllers.UpdateProduct)
+			productRoutes.DELETE("/:id", controllers.DeleteProduct)
 		}
 	}
 }

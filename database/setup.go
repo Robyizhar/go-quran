@@ -18,6 +18,6 @@ func InitDatabase() {
 	}
 	log.Println("Connected to the database successfully!")
 
-	database.AutoMigrate(&models.Users{}, &models.Product{})
+	database.AutoMigrate(&models.Users{}, &models.Product{}, &models.Surah{}, &models.Ayah{})
 	DB = database
 }
