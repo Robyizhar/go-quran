@@ -1,0 +1,2 @@
+nohup: ignoring input
+fork/exec /tmp/go-build1785973166/b001/exe/main: permission denied
