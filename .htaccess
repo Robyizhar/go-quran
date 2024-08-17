@@ -1,14 +1,14 @@
+# gin instant deploy
+# deployed by DomaiNesia
 Options +FollowSymLinks -Indexes
 IndexIgnore *
- 
 DirectoryIndex
- 
+
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 <IfModule mod_rewrite.c>
- 
-RewriteEngine on
- 
-# Simple URL redirect:
- 
-RewriteRule ^(.*)$ http://127.0.0.1:8090/$1 [P]
- 
+    RewriteEngine on
+    RewriteRule ^(.*)$ http://127.0.0.1:53991/$1 [P]
 </IfModule>
