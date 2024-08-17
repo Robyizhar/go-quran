@@ -3,7 +3,9 @@ package database
 import (
 	"go-quran/models"
 	"log"
+	"os"
 
+	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -11,7 +13,15 @@ import (
 var DB *gorm.DB
 
 func InitDatabase() {
-	dsn := "host=127.0.0.1 user=postgres password=asdw1234 dbname=go-quran port=5432 sslmode=disable TimeZone=Asia/Singapore"
+
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	dsn := os.Getenv("DATABASE_DSN")
+	if dsn == "" {
+		log.Fatal("DATABASE_DSN environment variable not set")
+	}
 	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("failed to connect to database:", err)
