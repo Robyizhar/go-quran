@@ -18,13 +18,19 @@ func SetupRoutes(r *gin.Engine) {
 
 	api := r.Group("/api")
 	{
-		productRoutes := api.Group("/products")
+		product := api.Group("/products")
 		{
-			productRoutes.GET("/", controllers.ListProduct)
-			productRoutes.GET("/:id", controllers.ShowProduct)
-			productRoutes.POST("/", controllers.StoreProduct)
-			productRoutes.PUT("/:id", controllers.UpdateProduct)
-			productRoutes.DELETE("/:id", controllers.DeleteProduct)
+			product.GET("/", controllers.ListProduct)
+			product.GET("/:id", controllers.ShowProduct)
+			product.POST("/", controllers.StoreProduct)
+			product.PUT("/:id", controllers.UpdateProduct)
+			product.DELETE("/:id", controllers.DeleteProduct)
+		}
+
+		surah := api.Group("/surah")
+		{
+			surah.GET("/", controllers.ListSurah)
+			surah.GET("/ayah", controllers.ListAyah)
 		}
 	}
 }

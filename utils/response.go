@@ -45,13 +45,13 @@ func ErrorResponse(c *gin.Context, params ...interface{}) {
 	statusCode := http.StatusInternalServerError
 
 	if len(params) > 0 {
-		if code, ok := params[1].(int); ok {
+		if code, ok := params[0].(int); ok {
 			statusCode = code
 		}
 	}
 
 	if len(params) > 1 {
-		if msg, ok := params[0].(string); ok {
+		if msg, ok := params[1].(string); ok {
 			message = msg
 		}
 	}
