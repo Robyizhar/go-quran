@@ -4,6 +4,7 @@ import (
 	"go-quran/database"
 	"go-quran/routes"
 	"go-quran/seeder"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,5 +16,10 @@ func main() {
 	seeder.Seed(database.DB)
 
 	routes.SetupRoutes(r)
-	r.Run()
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" // Default port
+	}
+
+	r.Run(":" + port)
 }
